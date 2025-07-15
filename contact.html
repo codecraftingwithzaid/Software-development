@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Innovatech Solutions - We Code. We Create. We Conquer.</title>
+    <title>Contact Us - Innovatech Solutions</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -28,6 +28,14 @@
       xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+    />
+
+    <!-- Leaflet CSS for Map -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
     />
 
     <!-- Custom CSS for animations and tweaks -->
@@ -72,6 +80,7 @@
       }
       .page.active {
         display: block;
+        animation: fadeIn 0.8s ease-in-out;
       }
 
       /* Hide elements for GSAP */
@@ -175,8 +184,8 @@
       /* --- Hero Section --- */
       #hero-section {
         position: relative;
-        height: 90vh;
-        min-height: 700px;
+        height: 60vh;
+        min-height: 450px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -194,51 +203,90 @@
         position: relative;
         z-index: 1;
       }
-      .typed-cursor {
-        font-size: 3rem;
-        color: var(--glow-secondary);
-      }
 
-      /* --- Cards & Glassmorphism --- */
-      .feature-card,
-      .project-card,
-      .testimonial-card,
-      .card {
+      /* --- Contact Page Specific Styles --- */
+      .contact-card {
         background: var(--bs-card-bg);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid var(--bs-border-color);
+        border-radius: 0.75rem;
       }
-      .feature-card,
-      .project-card,
-      .testimonial-card {
-        will-change: transform; /* For tilt.js performance */
+      .contact-info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
       }
-      .feature-card .icon {
-        width: 64px;
-        height: 64px;
+      .contact-info-item .icon {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
         background: linear-gradient(
           45deg,
           var(--glow-primary),
           var(--glow-secondary)
         );
         color: white;
-        font-size: 1.75rem;
+        font-size: 1.25rem;
         box-shadow: 0 0 15px rgba(var(--glow-primary-rgb), 0.5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
       }
-      .project-card .card-img-top {
-        aspect-ratio: 16 / 10;
-        object-fit: cover;
+      .form-control {
+        background-color: var(--bs-tertiary-bg);
+        border: 1px solid var(--bs-border-color);
+      }
+      .form-control:focus {
+        background-color: var(--bs-tertiary-bg);
+        border-color: var(--glow-primary);
+        box-shadow: 0 0 0 0.25rem rgba(var(--glow-primary-rgb), 0.25);
       }
 
-      /* --- Newsletter Section --- */
-      #newsletter-section {
-        background: linear-gradient(
-          45deg,
-          rgba(var(--glow-primary-rgb), 0.1),
-          rgba(var(--glow-secondary-rgb), 0.1)
-        );
-        border-top: 1px solid var(--bs-border-color);
+      /* Map Styles */
+      #map {
+        height: 450px;
+        border-radius: 0.75rem;
+        border: 1px solid var(--bs-border-color);
+        z-index: 1; /* Ensure map is clickable */
+      }
+      .leaflet-control-attribution a,
+      .leaflet-control-zoom a {
+        color: var(--glow-primary) !important;
+      }
+      .leaflet-tile-pane {
+        filter: grayscale(1);
+      }
+      [data-bs-theme="dark"] .leaflet-tile-pane {
+        filter: invert(1) grayscale(1) brightness(0.8);
+      }
+
+      /* Custom Notification */
+      #notification {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--bs-card-bg);
+        backdrop-filter: blur(10px);
+        color: var(--bs-body-color);
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--bs-border-color);
+        border-left: 4px solid var(--glow-secondary);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        z-index: 10000;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        pointer-events: none;
+      }
+      #notification.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      #notification .icon {
+        color: var(--glow-secondary);
       }
     </style>
   </head>
@@ -247,10 +295,21 @@
     <div class="cursor-outline"></div>
     <div class="cursor-dot"></div>
 
+    <!-- Custom Notification -->
+    <div id="notification">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-check-circle fs-4 me-3 icon"></i>
+        <div>
+          <h6 class="mb-0 fw-bold">Success!</h6>
+          <p class="mb-0 small">Our team will get back to you shortly.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Header -->
     <header class="navbar navbar-expand-lg sticky-top">
       <nav class="container">
-        <a class="navbar-brand fs-4" href="#" data-page="home"
+        <a class="navbar-brand fs-4" href="index.html"
           >Innovatech<span class="text-primary">.</span></a
         >
 
@@ -258,7 +317,7 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Home</a>
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About</a>
@@ -273,7 +332,7 @@
               <a class="nav-link" href="blog.html">Blogs</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
+              <a class="nav-link active" href="contact.html">Contact</a>
             </li>
           </ul>
         </div>
@@ -323,7 +382,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" href="index.html">Home</a>
+            <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
@@ -338,7 +397,7 @@
             <a class="nav-link" href="blog.html">Blogs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link active" href="contact.html">Contact</a>
           </li>
           <li class="nav-item mt-4">
             <a href="contact.html" class="btn btn-primary w-100">Get a Quote</a>
@@ -348,248 +407,144 @@
     </div>
 
     <main>
-      <!-- Home Page -->
-      <section id="home" class="page active">
+      <!-- Contact Page -->
+      <section id="contact-page" class="page active">
         <!-- Hero Section -->
         <div id="hero-section">
           <div id="tsparticles"></div>
           <div class="hero-content text-center">
             <div class="container">
-              <h1 class="display-3 fw-bold"><span id="typed-hero"></span></h1>
+              <h1 class="display-3 fw-bold gsap-reveal">Get In Touch</h1>
               <p
                 class="fs-5 text-body-secondary col-md-8 mx-auto my-4 gsap-reveal"
-                data-gsap-delay="0.5"
+                data-gsap-delay="0.2"
               >
-                We architect, design, and develop transformative software
-                solutions that drive growth and define industries.
+                Have a project in mind or just want to say hello? We'd love to
+                hear from you.
               </p>
-              <div
-                class="d-flex justify-content-center gap-3 gsap-reveal"
-                data-gsap-delay="0.7"
-              >
-                <a href="portfolio.html" class="btn btn-primary btn-lg px-4"
-                  >Explore Our Work</a
-                >
-                <a href="contact.html" class="btn btn-secondary btn-lg px-4"
-                  >Schedule a Call</a
-                >
-              </div>
             </div>
           </div>
         </div>
 
-        <!-- What We Do Section -->
-        <div class="py-5 bg-body-tertiary">
-          <div class="container">
-            <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">What We Do</h2>
-              <p class="fs-5 text-body-secondary">
-                From concept to launch, we are your dedicated technology
-                partner.
-              </p>
-            </div>
-            <div class="row g-4">
-              <div class="col-lg-4 col-md-6 gsap-reveal">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
-                  <div class="d-flex align-items-center mb-3">
-                    <div
-                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
-                    >
-                      <i class="fas fa-cubes"></i>
-                    </div>
-                    <h3 class="fs-4 fw-bold mb-0">Custom Software</h3>
-                  </div>
-                  <p class="text-body-secondary">
-                    Bespoke applications engineered for your unique business
-                    logic and scalability needs.
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
-                  <div class="d-flex align-items-center mb-3">
-                    <div
-                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
-                    >
-                      <i class="fas fa-mobile-screen-button"></i>
-                    </div>
-                    <h3 class="fs-4 fw-bold mb-0">Mobile Apps</h3>
-                  </div>
-                  <p class="text-body-secondary">
-                    Intuitive and high-performance native & cross-platform apps
-                    for iOS and Android.
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.2">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
-                  <div class="d-flex align-items-center mb-3">
-                    <div
-                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
-                    >
-                      <i class="fas fa-brain"></i>
-                    </div>
-                    <h3 class="fs-4 fw-bold mb-0">AI Integration</h3>
-                  </div>
-                  <p class="text-body-secondary">
-                    Leverage machine learning and AI to automate processes and
-                    unlock data-driven insights.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Featured Work Section -->
+        <!-- Contact Form & Info Section -->
         <div class="py-5">
           <div class="container">
-            <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">Featured Work</h2>
-              <p class="fs-5 text-body-secondary">
-                A glimpse into the solutions we've delivered.
-              </p>
-            </div>
-            <div class="row g-4">
-              <div class="col-lg-6 gsap-reveal">
-                <div class="card border-0 project-card" data-tilt>
-                  <img
-                    src="https://placehold.co/600x400/4f46e5/ffffff?text=Project+Orion"
-                    class="card-img-top"
-                    alt="Project Orion"
-                  />
-                  <div class="card-body p-4">
-                    <h3 class="fs-4 fw-bold">Project Orion</h3>
-                    <p class="text-body-secondary">
-                      A next-generation fintech platform for decentralized asset
-                      management, built with Go and React.
-                    </p>
+            <div class="contact-card p-4 p-lg-5">
+              <div class="row g-5">
+                <!-- Contact Info -->
+                <div class="col-lg-5 gsap-reveal">
+                  <h2 class="fw-bold mb-4">Contact Information</h2>
+                  <div class="contact-info-item">
+                    <div class="icon">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                      <h5 class="fw-bold mb-0">Our Office</h5>
+                      <p class="text-body-secondary mb-0">
+                        123 Tech Park, Indore, MP, India
+                      </p>
+                    </div>
                   </div>
+                  <div class="contact-info-item">
+                    <div class="icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                      <h5 class="fw-bold mb-0">Email Us</h5>
+                      <a
+                        href="mailto:hello@innovatech.com"
+                        class="text-body-secondary text-decoration-none"
+                        >hello@innovatech.com</a
+                      >
+                    </div>
+                  </div>
+                  <div class="contact-info-item">
+                    <div class="icon"><i class="fas fa-phone"></i></div>
+                    <div>
+                      <h5 class="fw-bold mb-0">Call Us</h5>
+                      <a
+                        href="tel:+911234567890"
+                        class="text-body-secondary text-decoration-none"
+                        >+91 123-456-7890</a
+                      >
+                    </div>
+                  </div>
+                  <hr class="my-4" />
+                  <h5 class="fw-bold mb-3">Business Hours</h5>
+                  <p class="text-body-secondary">
+                    Monday - Friday: 9:00 AM - 6:00 PM
+                  </p>
+                  <p class="text-body-secondary">Saturday & Sunday: Closed</p>
                 </div>
-              </div>
-              <div class="col-lg-6 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card border-0 project-card" data-tilt>
-                  <img
-                    src="https://placehold.co/600x400/0ea5e9/ffffff?text=Project+Helia"
-                    class="card-img-top"
-                    alt="Project Helia"
-                  />
-                  <div class="card-body p-4">
-                    <h3 class="fs-4 fw-bold">Project Helia</h3>
-                    <p class="text-body-secondary">
-                      An AI-powered diagnostic tool for the healthcare industry,
-                      improving accuracy with Python and TensorFlow.
-                    </p>
-                  </div>
+
+                <!-- Contact Form -->
+                <div class="col-lg-7 gsap-reveal" data-gsap-delay="0.2">
+                  <h2 class="fw-bold mb-4">Send Us a Message</h2>
+                  <form id="contact-form" novalidate>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-lg"
+                          id="name"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="email" class="form-label"
+                          >Email Address</label
+                        >
+                        <input
+                          type="email"
+                          class="form-control form-control-lg"
+                          id="email"
+                          required
+                        />
+                      </div>
+                      <div class="col-12">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-lg"
+                          id="subject"
+                          required
+                        />
+                      </div>
+                      <div class="col-12">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea
+                          class="form-control form-control-lg"
+                          id="message"
+                          rows="5"
+                          required
+                        ></textarea>
+                      </div>
+                      <div class="col-12">
+                        <button
+                          type="submit"
+                          class="btn btn-primary btn-lg w-100"
+                        >
+                          Send Message
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Testimonials Section -->
+        <!-- Map Section -->
         <div class="py-5 bg-body-tertiary">
           <div class="container">
             <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">What Our Partners Say</h2>
+              <h2 class="display-5 fw-bold">Find Us Here</h2>
               <p class="fs-5 text-body-secondary">
-                We build relationships, not just software.
+                Visit our office in the heart of Indore's tech hub.
               </p>
             </div>
-            <div class="row g-4">
-              <div class="col-lg-4 gsap-reveal">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "Innovatech isn't just a vendor; they are a true strategic
-                    partner. Their technical depth and commitment to our success
-                    were unparalleled."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=JD"
-                      class="rounded-circle me-3"
-                      alt="Jane Doe"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">Jane Doe</h5>
-                      <small class="text-body-secondary">CEO, StellarFi</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "The team's ability to translate complex requirements into a
-                    seamless, elegant product was simply outstanding. They
-                    exceeded all our expectations."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=JS"
-                      class="rounded-circle me-3"
-                      alt="John Smith"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">John Smith</h5>
-                      <small class="text-body-secondary"
-                        >CTO, Apex Industries</small
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 gsap-reveal" data-gsap-delay="0.2">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "We needed to scale fast without compromising quality.
-                    Innovatech delivered a robust, scalable architecture that
-                    has become the backbone of our operations."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=SC"
-                      class="rounded-circle me-3"
-                      alt="Sam Chen"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">Sam Chen</h5>
-                      <small class="text-body-secondary"
-                        >Founder, QuantumLeap</small
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Newsletter Section -->
-        <div id="newsletter-section" class="py-5">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8 text-center gsap-reveal">
-                <h2 class="display-5 fw-bold">Join the Future</h2>
-                <p class="fs-5 text-body-secondary mb-4">
-                  Subscribe to our newsletter for exclusive insights on AI,
-                  software architecture, and the future of technology.
-                </p>
-                <form id="home-newsletter-form" class="d-flex mw-md-75 mx-auto">
-                  <input
-                    type="email"
-                    class="form-control form-control-lg rounded-end-0"
-                    placeholder="Enter your email address"
-                    required
-                  />
-                  <button
-                    class="btn btn-primary rounded-start-0 px-4"
-                    type="submit"
-                  >
-                    Subscribe
-                  </button>
-                </form>
-              </div>
+            <div class="gsap-reveal">
+              <div id="map"></div>
             </div>
           </div>
         </div>
@@ -712,9 +667,15 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+
+    <!-- Leaflet JS for Map -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
 
     <!-- Custom JavaScript -->
     <script>
@@ -775,7 +736,9 @@
           htmlEl.setAttribute("data-bs-theme", theme);
           themeToggler.innerHTML = theme === "dark" ? sunIcon : moonIcon;
           localStorage.setItem("theme", theme);
-          loadParticles(theme);
+          if (document.getElementById("tsparticles")) {
+            loadParticles(theme);
+          }
         };
 
         themeToggler.addEventListener("click", () => {
@@ -783,19 +746,10 @@
           setTheme(currentTheme === "dark" ? "light" : "dark");
         });
 
-        // --- HERO SECTION SETUP ---
-        new Typed("#typed-hero", {
-          strings: ["We Code.", "We Create.", "We Conquer."],
-          typeSpeed: 70,
-          backSpeed: 40,
-          backDelay: 2000,
-          loop: true,
-        });
-
+        // --- HERO PARTICLES ---
         function loadParticles(theme) {
           const particleColor = theme === "dark" ? "#4f46e5" : "#64748b";
           const linkColor = theme === "dark" ? "#1e293b" : "#94a3b8";
-
           tsParticles.load("tsparticles", {
             fpsLimit: 60,
             interactivity: {
@@ -849,28 +803,67 @@
           });
         }
 
+        // --- CONTACT FORM & NOTIFICATION ---
+        const contactForm = document.getElementById("contact-form");
+        const notification = document.getElementById("notification");
+
+        if (contactForm) {
+          contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            // Show custom notification instead of an alert
+            notification.classList.add("show");
+
+            // Reset form after a short delay
+            setTimeout(() => {
+              contactForm.reset();
+            }, 500);
+
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+              notification.classList.remove("show");
+            }, 5000);
+          });
+        }
+
+        // --- LEAFLET MAP INITIALIZATION ---
+        function initMap() {
+          // Coordinates for Indore, Madhya Pradesh, India
+          const lat = 22.7196;
+          const lng = 75.8577;
+
+          const map = L.map("map").setView([lat, lng], 14);
+
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          }).addTo(map);
+
+          const customIcon = L.divIcon({
+            className: "custom-div-icon",
+            html: `<div style="background-color:var(--glow-primary);width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px var(--glow-primary);"><i class="fas fa-map-marker-alt" style="color:white;"></i></div>`,
+            iconSize: [30, 42],
+            iconAnchor: [15, 42],
+          });
+
+          L.marker([lat, lng], { icon: customIcon })
+            .addTo(map)
+            .bindPopup(
+              "<b>Innovatech Solutions</b><br>123 Tech Park, Indore, MP."
+            )
+            .openPopup();
+        }
+
         // --- INITIALIZE ON LOAD ---
         const savedTheme = localStorage.getItem("theme") || "dark";
         setTheme(savedTheme);
         setupGsapAnimations();
+        initMap();
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-          max: 10,
+          max: 5,
           speed: 400,
           glare: true,
           "max-glare": 0.1,
         });
-
-        // --- FORM HANDLING ---
-        const homeNewsletterForm = document.getElementById(
-          "home-newsletter-form"
-        );
-        if (homeNewsletterForm) {
-          homeNewsletterForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            alert("Thank you for subscribing!");
-            e.target.reset();
-          });
-        }
       });
     </script>
   </body>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Innovatech Solutions - We Code. We Create. We Conquer.</title>
+    <title>Our Portfolio - Innovatech Solutions</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -72,6 +72,7 @@
       }
       .page.active {
         display: block;
+        animation: fadeIn 0.8s ease-in-out;
       }
 
       /* Hide elements for GSAP */
@@ -175,8 +176,8 @@
       /* --- Hero Section --- */
       #hero-section {
         position: relative;
-        height: 90vh;
-        min-height: 700px;
+        height: 70vh;
+        min-height: 500px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -194,45 +195,78 @@
         position: relative;
         z-index: 1;
       }
-      .typed-cursor {
-        font-size: 3rem;
-        color: var(--glow-secondary);
-      }
 
-      /* --- Cards & Glassmorphism --- */
-      .feature-card,
-      .project-card,
-      .testimonial-card,
-      .card {
+      /* --- Portfolio Specific Styles --- */
+      .portfolio-card {
         background: var(--bs-card-bg);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         transition: transform 0.3s, box-shadow 0.3s;
+        will-change: transform;
       }
-      .feature-card,
-      .project-card,
-      .testimonial-card {
-        will-change: transform; /* For tilt.js performance */
+      .portfolio-card .card-img-top {
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        border-bottom: 1px solid var(--bs-border-color);
       }
-      .feature-card .icon {
-        width: 64px;
-        height: 64px;
+      .tech-tag {
+        display: inline-block;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background-color: rgba(var(--glow-primary-rgb), 0.15);
+        color: var(--glow-primary);
+        border-radius: 999px;
+      }
+      [data-bs-theme="light"] .tech-tag {
+        background-color: rgba(var(--glow-primary-rgb), 0.1);
+      }
+
+      /* Filter Buttons */
+      .filter-btn {
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+      }
+      .filter-btn.active {
         background: linear-gradient(
           45deg,
           var(--glow-primary),
           var(--glow-secondary)
         );
-        color: white;
-        font-size: 1.75rem;
+        color: white !important;
         box-shadow: 0 0 15px rgba(var(--glow-primary-rgb), 0.5);
+        border-color: transparent;
       }
-      .project-card .card-img-top {
-        aspect-ratio: 16 / 10;
-        object-fit: cover;
+      [data-bs-theme="light"] .filter-btn.active {
+        color: white !important;
+      }
+      .portfolio-item {
+        transition: transform 0.4s ease, opacity 0.4s ease;
+      }
+      .portfolio-item.hide {
+        transform: scale(0.8);
+        opacity: 0;
+        display: none;
       }
 
-      /* --- Newsletter Section --- */
-      #newsletter-section {
+      /* Client Logos */
+      .client-logo {
+        max-height: 40px;
+        filter: grayscale(100%) opacity(0.6);
+        transition: all 0.3s ease;
+      }
+      .client-logo:hover {
+        filter: grayscale(0%) opacity(1);
+      }
+      [data-bs-theme="light"] .client-logo {
+        filter: grayscale(100%) opacity(0.8);
+      }
+      [data-bs-theme="light"] .client-logo:hover {
+        filter: grayscale(0%) opacity(1);
+      }
+
+      /* --- CTA Section --- */
+      #cta-section {
         background: linear-gradient(
           45deg,
           rgba(var(--glow-primary-rgb), 0.1),
@@ -250,7 +284,7 @@
     <!-- Header -->
     <header class="navbar navbar-expand-lg sticky-top">
       <nav class="container">
-        <a class="navbar-brand fs-4" href="#" data-page="home"
+        <a class="navbar-brand fs-4" href="index.html"
           >Innovatech<span class="text-primary">.</span></a
         >
 
@@ -258,7 +292,7 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Home</a>
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About</a>
@@ -267,7 +301,7 @@
               <a class="nav-link" href="services.html">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="portfolio.html">Portfolio</a>
+              <a class="nav-link active" href="portfolio.html">Portfolio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="blog.html">Blogs</a>
@@ -323,7 +357,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" href="index.html">Home</a>
+            <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
@@ -332,7 +366,7 @@
             <a class="nav-link" href="services.html">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="portfolio.html">Portfolio</a>
+            <a class="nav-link active" href="portfolio.html">Portfolio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="blog.html">Blogs</a>
@@ -348,111 +382,79 @@
     </div>
 
     <main>
-      <!-- Home Page -->
-      <section id="home" class="page active">
+      <!-- Portfolio Page -->
+      <section id="portfolio-page" class="page active">
         <!-- Hero Section -->
         <div id="hero-section">
           <div id="tsparticles"></div>
           <div class="hero-content text-center">
             <div class="container">
-              <h1 class="display-3 fw-bold"><span id="typed-hero"></span></h1>
+              <h1 class="display-3 fw-bold gsap-reveal">Our Work</h1>
               <p
                 class="fs-5 text-body-secondary col-md-8 mx-auto my-4 gsap-reveal"
-                data-gsap-delay="0.5"
+                data-gsap-delay="0.2"
               >
-                We architect, design, and develop transformative software
-                solutions that drive growth and define industries.
+                We take pride in delivering elegant, high-performance solutions.
+                Explore a selection of our featured projects.
               </p>
-              <div
-                class="d-flex justify-content-center gap-3 gsap-reveal"
-                data-gsap-delay="0.7"
-              >
-                <a href="portfolio.html" class="btn btn-primary btn-lg px-4"
-                  >Explore Our Work</a
-                >
-                <a href="contact.html" class="btn btn-secondary btn-lg px-4"
-                  >Schedule a Call</a
-                >
-              </div>
             </div>
           </div>
         </div>
 
-        <!-- What We Do Section -->
+        <!-- Portfolio Gallery Section -->
         <div class="py-5 bg-body-tertiary">
           <div class="container">
+            <!-- Filter Buttons -->
             <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">What We Do</h2>
-              <p class="fs-5 text-body-secondary">
-                From concept to launch, we are your dedicated technology
-                partner.
-              </p>
-            </div>
-            <div class="row g-4">
-              <div class="col-lg-4 col-md-6 gsap-reveal">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
-                  <div class="d-flex align-items-center mb-3">
-                    <div
-                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
-                    >
-                      <i class="fas fa-cubes"></i>
-                    </div>
-                    <h3 class="fs-4 fw-bold mb-0">Custom Software</h3>
-                  </div>
-                  <p class="text-body-secondary">
-                    Bespoke applications engineered for your unique business
-                    logic and scalability needs.
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
-                  <div class="d-flex align-items-center mb-3">
-                    <div
-                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
-                    >
-                      <i class="fas fa-mobile-screen-button"></i>
-                    </div>
-                    <h3 class="fs-4 fw-bold mb-0">Mobile Apps</h3>
-                  </div>
-                  <p class="text-body-secondary">
-                    Intuitive and high-performance native & cross-platform apps
-                    for iOS and Android.
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.2">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
-                  <div class="d-flex align-items-center mb-3">
-                    <div
-                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
-                    >
-                      <i class="fas fa-brain"></i>
-                    </div>
-                    <h3 class="fs-4 fw-bold mb-0">AI Integration</h3>
-                  </div>
-                  <p class="text-body-secondary">
-                    Leverage machine learning and AI to automate processes and
-                    unlock data-driven insights.
-                  </p>
-                </div>
+              <div
+                id="portfolio-filters"
+                class="btn-group flex-wrap"
+                role="group"
+                aria-label="Portfolio Filters"
+              >
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary filter-btn active"
+                  data-filter="all"
+                >
+                  All
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary filter-btn"
+                  data-filter="web"
+                >
+                  Web Apps
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary filter-btn"
+                  data-filter="mobile"
+                >
+                  Mobile Apps
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary filter-btn"
+                  data-filter="ai"
+                >
+                  AI / ML
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary filter-btn"
+                  data-filter="uiux"
+                >
+                  UI/UX Design
+                </button>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Featured Work Section -->
-        <div class="py-5">
-          <div class="container">
-            <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">Featured Work</h2>
-              <p class="fs-5 text-body-secondary">
-                A glimpse into the solutions we've delivered.
-              </p>
-            </div>
-            <div class="row g-4">
-              <div class="col-lg-6 gsap-reveal">
-                <div class="card border-0 project-card" data-tilt>
+            <!-- Portfolio Grid -->
+            <div class="row g-4" id="portfolio-grid">
+              <!-- Project 1: Orion -->
+              <div class="col-lg-6 portfolio-item" data-category="web">
+                <div class="card border-0 portfolio-card gsap-reveal" data-tilt>
                   <img
                     src="https://placehold.co/600x400/4f46e5/ffffff?text=Project+Orion"
                     class="card-img-top"
@@ -464,11 +466,24 @@
                       A next-generation fintech platform for decentralized asset
                       management, built with Go and React.
                     </p>
+                    <div class="mb-3">
+                      <span class="tech-tag">React</span>
+                      <span class="tech-tag">Go</span>
+                      <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-primary"
+                      >View Case Study</a
+                    >
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card border-0 project-card" data-tilt>
+              <!-- Project 2: Helia -->
+              <div class="col-lg-6 portfolio-item" data-category="ai">
+                <div
+                  class="card border-0 portfolio-card gsap-reveal"
+                  data-gsap-delay="0.1"
+                  data-tilt
+                >
                   <img
                     src="https://placehold.co/600x400/0ea5e9/ffffff?text=Project+Helia"
                     class="card-img-top"
@@ -480,6 +495,122 @@
                       An AI-powered diagnostic tool for the healthcare industry,
                       improving accuracy with Python and TensorFlow.
                     </p>
+                    <div class="mb-3">
+                      <span class="tech-tag">Python</span>
+                      <span class="tech-tag">TensorFlow</span>
+                      <span class="tech-tag">Flask</span>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-primary"
+                      >View Case Study</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Project 3: ConnectSphere -->
+              <div class="col-lg-6 portfolio-item" data-category="mobile">
+                <div class="card border-0 portfolio-card gsap-reveal" data-tilt>
+                  <img
+                    src="https://placehold.co/600x400/10b981/ffffff?text=ConnectSphere"
+                    class="card-img-top"
+                    alt="ConnectSphere"
+                  />
+                  <div class="card-body p-4">
+                    <h3 class="fs-4 fw-bold">ConnectSphere</h3>
+                    <p class="text-body-secondary">
+                      A cross-platform social networking app for professionals,
+                      built with React Native for a unified codebase.
+                    </p>
+                    <div class="mb-3">
+                      <span class="tech-tag">React Native</span>
+                      <span class="tech-tag">Firebase</span>
+                      <span class="tech-tag">Node.js</span>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-primary"
+                      >View Case Study</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Project 4: QuantumLeap -->
+              <div class="col-lg-6 portfolio-item" data-category="uiux">
+                <div
+                  class="card border-0 portfolio-card gsap-reveal"
+                  data-gsap-delay="0.1"
+                  data-tilt
+                >
+                  <img
+                    src="https://placehold.co/600x400/f59e0b/ffffff?text=QuantumLeap+UI"
+                    class="card-img-top"
+                    alt="QuantumLeap UI"
+                  />
+                  <div class="card-body p-4">
+                    <h3 class="fs-4 fw-bold">QuantumLeap UI/UX</h3>
+                    <p class="text-body-secondary">
+                      A complete design system and user experience overhaul for
+                      a leading SaaS analytics platform, focusing on usability.
+                    </p>
+                    <div class="mb-3">
+                      <span class="tech-tag">Figma</span>
+                      <span class="tech-tag">User Research</span>
+                      <span class="tech-tag">Prototyping</span>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-primary"
+                      >View Case Study</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Project 5: DataStream -->
+              <div class="col-lg-6 portfolio-item" data-category="web">
+                <div class="card border-0 portfolio-card gsap-reveal" data-tilt>
+                  <img
+                    src="https://placehold.co/600x400/ec4899/ffffff?text=DataStream"
+                    class="card-img-top"
+                    alt="DataStream"
+                  />
+                  <div class="card-body p-4">
+                    <h3 class="fs-4 fw-bold">DataStream Analytics</h3>
+                    <p class="text-body-secondary">
+                      A real-time data visualization dashboard for enterprise
+                      clients, built with Vue.js and D3.js for complex charting.
+                    </p>
+                    <div class="mb-3">
+                      <span class="tech-tag">Vue.js</span>
+                      <span class="tech-tag">D3.js</span>
+                      <span class="tech-tag">AWS</span>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-primary"
+                      >View Case Study</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Project 6: SwiftCart -->
+              <div class="col-lg-6 portfolio-item" data-category="mobile">
+                <div
+                  class="card border-0 portfolio-card gsap-reveal"
+                  data-gsap-delay="0.1"
+                  data-tilt
+                >
+                  <img
+                    src="https://placehold.co/600x400/8b5cf6/ffffff?text=SwiftCart"
+                    class="card-img-top"
+                    alt="SwiftCart"
+                  />
+                  <div class="card-body p-4">
+                    <h3 class="fs-4 fw-bold">SwiftCart E-commerce</h3>
+                    <p class="text-body-secondary">
+                      A native iOS e-commerce application with AR features for
+                      virtual product try-ons, built with Swift and ARKit.
+                    </p>
+                    <div class="mb-3">
+                      <span class="tech-tag">Swift</span>
+                      <span class="tech-tag">ARKit</span>
+                      <span class="tech-tag">Shopify API</span>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-primary"
+                      >View Case Study</a
+                    >
                   </div>
                 </div>
               </div>
@@ -487,108 +618,56 @@
           </div>
         </div>
 
-        <!-- Testimonials Section -->
-        <div class="py-5 bg-body-tertiary">
+        <!-- Trusted By Section -->
+        <div class="py-5">
           <div class="container">
             <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">What Our Partners Say</h2>
-              <p class="fs-5 text-body-secondary">
-                We build relationships, not just software.
-              </p>
+              <h2 class="display-5 fw-bold">Trusted By Industry Leaders</h2>
             </div>
-            <div class="row g-4">
-              <div class="col-lg-4 gsap-reveal">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "Innovatech isn't just a vendor; they are a true strategic
-                    partner. Their technical depth and commitment to our success
-                    were unparalleled."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=JD"
-                      class="rounded-circle me-3"
-                      alt="Jane Doe"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">Jane Doe</h5>
-                      <small class="text-body-secondary">CEO, StellarFi</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "The team's ability to translate complex requirements into a
-                    seamless, elegant product was simply outstanding. They
-                    exceeded all our expectations."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=JS"
-                      class="rounded-circle me-3"
-                      alt="John Smith"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">John Smith</h5>
-                      <small class="text-body-secondary"
-                        >CTO, Apex Industries</small
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 gsap-reveal" data-gsap-delay="0.2">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "We needed to scale fast without compromising quality.
-                    Innovatech delivered a robust, scalable architecture that
-                    has become the backbone of our operations."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=SC"
-                      class="rounded-circle me-3"
-                      alt="Sam Chen"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">Sam Chen</h5>
-                      <small class="text-body-secondary"
-                        >Founder, QuantumLeap</small
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div
+              class="d-flex justify-content-center align-items-center flex-wrap gap-5 gsap-reveal"
+              data-gsap-delay="0.2"
+            >
+              <img
+                src="https://placehold.co/150x40/020617/e2e8f0?text=StellarFi"
+                alt="StellarFi Logo"
+                class="client-logo"
+              />
+              <img
+                src="https://placehold.co/150x40/020617/e2e8f0?text=Apex+Industries"
+                alt="Apex Industries Logo"
+                class="client-logo"
+              />
+              <img
+                src="https://placehold.co/150x40/020617/e2e8f0?text=QuantumLeap"
+                alt="QuantumLeap Logo"
+                class="client-logo"
+              />
+              <img
+                src="https://placehold.co/150x40/020617/e2e8f0?text=Helios+Health"
+                alt="Helios Health Logo"
+                class="client-logo"
+              />
+              <img
+                src="https://placehold.co/150x40/020617/e2e8f0?text=Nova+Bank"
+                alt="Nova Bank Logo"
+                class="client-logo"
+              />
             </div>
           </div>
         </div>
 
-        <!-- Newsletter Section -->
-        <div id="newsletter-section" class="py-5">
+        <!-- CTA Section -->
+        <div id="cta-section" class="py-5">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-lg-8 text-center gsap-reveal">
-                <h2 class="display-5 fw-bold">Join the Future</h2>
+                <h2 class="display-5 fw-bold">Let's Build Something Amazing</h2>
                 <p class="fs-5 text-body-secondary mb-4">
-                  Subscribe to our newsletter for exclusive insights on AI,
-                  software architecture, and the future of technology.
+                  Have an idea for a groundbreaking project? We have the team
+                  and the technology to make it a reality.
                 </p>
-                <form id="home-newsletter-form" class="d-flex mw-md-75 mx-auto">
-                  <input
-                    type="email"
-                    class="form-control form-control-lg rounded-end-0"
-                    placeholder="Enter your email address"
-                    required
-                  />
-                  <button
-                    class="btn btn-primary rounded-start-0 px-4"
-                    type="submit"
-                  >
-                    Subscribe
-                  </button>
-                </form>
+                <a href="#" class="btn btn-primary btn-lg px-5">Get a Quote</a>
               </div>
             </div>
           </div>
@@ -712,7 +791,6 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
 
@@ -775,7 +853,9 @@
           htmlEl.setAttribute("data-bs-theme", theme);
           themeToggler.innerHTML = theme === "dark" ? sunIcon : moonIcon;
           localStorage.setItem("theme", theme);
-          loadParticles(theme);
+          if (document.getElementById("tsparticles")) {
+            loadParticles(theme);
+          }
         };
 
         themeToggler.addEventListener("click", () => {
@@ -783,15 +863,7 @@
           setTheme(currentTheme === "dark" ? "light" : "dark");
         });
 
-        // --- HERO SECTION SETUP ---
-        new Typed("#typed-hero", {
-          strings: ["We Code.", "We Create.", "We Conquer."],
-          typeSpeed: 70,
-          backSpeed: 40,
-          backDelay: 2000,
-          loop: true,
-        });
-
+        // --- HERO PARTICLES ---
         function loadParticles(theme) {
           const particleColor = theme === "dark" ? "#4f46e5" : "#64748b";
           const linkColor = theme === "dark" ? "#1e293b" : "#94a3b8";
@@ -849,28 +921,46 @@
           });
         }
 
+        // --- PORTFOLIO FILTERING ---
+        const filterContainer = document.querySelector("#portfolio-filters");
+        const portfolioItems = document.querySelectorAll(
+          "#portfolio-grid .portfolio-item"
+        );
+
+        if (filterContainer) {
+          filterContainer.addEventListener("click", (e) => {
+            if (e.target.matches(".filter-btn")) {
+              // Remove active class from all buttons
+              filterContainer
+                .querySelector(".active")
+                .classList.remove("active");
+              // Add active class to clicked button
+              e.target.classList.add("active");
+
+              const filterValue = e.target.getAttribute("data-filter");
+
+              portfolioItems.forEach((item) => {
+                const itemCategory = item.getAttribute("data-category");
+                if (filterValue === "all" || filterValue === itemCategory) {
+                  item.classList.remove("hide");
+                } else {
+                  item.classList.add("hide");
+                }
+              });
+            }
+          });
+        }
+
         // --- INITIALIZE ON LOAD ---
         const savedTheme = localStorage.getItem("theme") || "dark";
         setTheme(savedTheme);
         setupGsapAnimations();
         VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-          max: 10,
+          max: 5,
           speed: 400,
           glare: true,
           "max-glare": 0.1,
         });
-
-        // --- FORM HANDLING ---
-        const homeNewsletterForm = document.getElementById(
-          "home-newsletter-form"
-        );
-        if (homeNewsletterForm) {
-          homeNewsletterForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            alert("Thank you for subscribing!");
-            e.target.reset();
-          });
-        }
       });
     </script>
   </body>

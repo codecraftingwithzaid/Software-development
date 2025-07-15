@@ -3,17 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Innovatech Solutions - We Code. We Create. We Conquer.</title>
+    <title>Our Services - Innovatech Solutions</title>
 
-    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
 
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,16 +19,14 @@
       rel="stylesheet"
     />
 
-    <!-- Font Awesome for Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
 
-    <!-- Custom CSS for animations and tweaks -->
     <style>
       :root {
         --bs-body-font-family: "Inter", sans-serif;
@@ -72,6 +68,7 @@
       }
       .page.active {
         display: block;
+        animation: fadeIn 0.8s ease-in-out;
       }
 
       /* Hide elements for GSAP */
@@ -175,8 +172,8 @@
       /* --- Hero Section --- */
       #hero-section {
         position: relative;
-        height: 90vh;
-        min-height: 700px;
+        height: 70vh;
+        min-height: 500px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -194,27 +191,21 @@
         position: relative;
         z-index: 1;
       }
-      .typed-cursor {
-        font-size: 3rem;
-        color: var(--glow-secondary);
-      }
 
       /* --- Cards & Glassmorphism --- */
-      .feature-card,
-      .project-card,
-      .testimonial-card,
+      .service-card,
+      .process-card,
       .card {
         background: var(--bs-card-bg);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         transition: transform 0.3s, box-shadow 0.3s;
       }
-      .feature-card,
-      .project-card,
-      .testimonial-card {
+      .service-card,
+      .process-card {
         will-change: transform; /* For tilt.js performance */
       }
-      .feature-card .icon {
+      .service-card .icon {
         width: 64px;
         height: 64px;
         background: linear-gradient(
@@ -226,13 +217,18 @@
         font-size: 1.75rem;
         box-shadow: 0 0 15px rgba(var(--glow-primary-rgb), 0.5);
       }
-      .project-card .card-img-top {
-        aspect-ratio: 16 / 10;
-        object-fit: cover;
+
+      /* --- Tech Stack Section --- */
+      .tech-icon {
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+      .tech-icon:hover {
+        transform: translateY(-5px);
+        color: var(--glow-secondary);
       }
 
-      /* --- Newsletter Section --- */
-      #newsletter-section {
+      /* --- CTA Section --- */
+      #cta-section {
         background: linear-gradient(
           45deg,
           rgba(var(--glow-primary-rgb), 0.1),
@@ -243,28 +239,25 @@
     </style>
   </head>
   <body>
-    <!-- Custom Cursor -->
     <div class="cursor-outline"></div>
     <div class="cursor-dot"></div>
 
-    <!-- Header -->
     <header class="navbar navbar-expand-lg sticky-top">
       <nav class="container">
-        <a class="navbar-brand fs-4" href="#" data-page="home"
+        <a class="navbar-brand fs-4" href="index.html"
           >Innovatech<span class="text-primary">.</span></a
         >
 
-        <!-- Desktop Nav -->
         <div class="collapse navbar-collapse" id="mainNavbar">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Home</a>
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="services.html">Services</a>
+              <a class="nav-link active" href="services.html">Services</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="portfolio.html">Portfolio</a>
@@ -282,13 +275,10 @@
           <button
             id="theme-toggler"
             class="btn btn-link text-body-secondary me-2 p-2"
-          >
-            <!-- Icon will be inserted by JS -->
-          </button>
+          ></button>
           <a href="contact.html" class="btn btn-primary d-none d-lg-block"
             >Get a Quote</a
           >
-          <!-- Mobile Menu Toggler -->
           <button
             class="btn btn-link d-lg-none p-2"
             type="button"
@@ -302,7 +292,6 @@
       </nav>
     </header>
 
-    <!-- Mobile Offcanvas Nav -->
     <div
       class="offcanvas offcanvas-start offcanvas-nav"
       tabindex="-1"
@@ -323,13 +312,13 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" href="index.html">Home</a>
+            <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="services.html">Services</a>
+            <a class="nav-link active" href="services.html">Services</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="portfolio.html">Portfolio</a>
@@ -348,49 +337,36 @@
     </div>
 
     <main>
-      <!-- Home Page -->
-      <section id="home" class="page active">
-        <!-- Hero Section -->
+      <section id="services-page" class="page active">
         <div id="hero-section">
           <div id="tsparticles"></div>
           <div class="hero-content text-center">
             <div class="container">
-              <h1 class="display-3 fw-bold"><span id="typed-hero"></span></h1>
+              <h1 class="display-3 fw-bold gsap-reveal">
+                Our Comprehensive Services
+              </h1>
               <p
                 class="fs-5 text-body-secondary col-md-8 mx-auto my-4 gsap-reveal"
-                data-gsap-delay="0.5"
+                data-gsap-delay="0.2"
               >
-                We architect, design, and develop transformative software
-                solutions that drive growth and define industries.
+                Driving innovation with cutting-edge technology solutions
+                tailored to your business needs.
               </p>
-              <div
-                class="d-flex justify-content-center gap-3 gsap-reveal"
-                data-gsap-delay="0.7"
-              >
-                <a href="portfolio.html" class="btn btn-primary btn-lg px-4"
-                  >Explore Our Work</a
-                >
-                <a href="contact.html" class="btn btn-secondary btn-lg px-4"
-                  >Schedule a Call</a
-                >
-              </div>
             </div>
           </div>
         </div>
 
-        <!-- What We Do Section -->
         <div class="py-5 bg-body-tertiary">
           <div class="container">
             <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">What We Do</h2>
+              <h2 class="display-5 fw-bold">Our Core Services</h2>
               <p class="fs-5 text-body-secondary">
-                From concept to launch, we are your dedicated technology
-                partner.
+                We craft bespoke solutions across a spectrum of technologies.
               </p>
             </div>
             <div class="row g-4">
               <div class="col-lg-4 col-md-6 gsap-reveal">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
+                <div class="card h-100 p-4 border-0 service-card" data-tilt>
                   <div class="d-flex align-items-center mb-3">
                     <div
                       class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
@@ -401,12 +377,29 @@
                   </div>
                   <p class="text-body-secondary">
                     Bespoke applications engineered for your unique business
-                    logic and scalability needs.
+                    logic and scalability needs, from ERPs to complex internal
+                    tools.
                   </p>
                 </div>
               </div>
               <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
+                <div class="card h-100 p-4 border-0 service-card" data-tilt>
+                  <div class="d-flex align-items-center mb-3">
+                    <div
+                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
+                    >
+                      <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="fs-4 fw-bold mb-0">Web Development</h3>
+                  </div>
+                  <p class="text-body-secondary">
+                    Responsive, high-performance websites and web applications
+                    using modern frameworks like React, Vue, and Angular.
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.2">
+                <div class="card h-100 p-4 border-0 service-card" data-tilt>
                   <div class="d-flex align-items-center mb-3">
                     <div
                       class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
@@ -416,24 +409,58 @@
                     <h3 class="fs-4 fw-bold mb-0">Mobile Apps</h3>
                   </div>
                   <p class="text-body-secondary">
-                    Intuitive and high-performance native & cross-platform apps
-                    for iOS and Android.
+                    Intuitive and high-performance native (Swift, Kotlin) &
+                    cross-platform (React Native) apps for iOS and Android.
                   </p>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.2">
-                <div class="card h-100 p-4 border-0 feature-card" data-tilt>
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.3">
+                <div class="card h-100 p-4 border-0 service-card" data-tilt>
+                  <div class="d-flex align-items-center mb-3">
+                    <div
+                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
+                    >
+                      <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="fs-4 fw-bold mb-0">UI/UX Design</h3>
+                  </div>
+                  <p class="text-body-secondary">
+                    User-centric design that balances aesthetics with
+                    functionality, creating engaging digital experiences through
+                    wireframing and prototyping.
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.4">
+                <div class="card h-100 p-4 border-0 service-card" data-tilt>
                   <div class="d-flex align-items-center mb-3">
                     <div
                       class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
                     >
                       <i class="fas fa-brain"></i>
                     </div>
-                    <h3 class="fs-4 fw-bold mb-0">AI Integration</h3>
+                    <h3 class="fs-4 fw-bold mb-0">AI & Machine Learning</h3>
                   </div>
                   <p class="text-body-secondary">
-                    Leverage machine learning and AI to automate processes and
-                    unlock data-driven insights.
+                    Leverage machine learning and AI to automate processes,
+                    build predictive models, and unlock data-driven insights.
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.5">
+                <div class="card h-100 p-4 border-0 service-card" data-tilt>
+                  <div class="d-flex align-items-center mb-3">
+                    <div
+                      class="icon rounded-3 d-flex align-items-center justify-content-center me-3"
+                    >
+                      <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="fs-4 fw-bold mb-0">Cloud & DevOps</h3>
+                  </div>
+                  <p class="text-body-secondary">
+                    End-to-end cloud solutions, from architecture design to
+                    CI/CD pipeline implementation, ensuring scalability and
+                    reliability.
                   </p>
                 </div>
               </div>
@@ -441,154 +468,124 @@
           </div>
         </div>
 
-        <!-- Featured Work Section -->
         <div class="py-5">
           <div class="container">
             <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">Featured Work</h2>
+              <h2 class="display-5 fw-bold">Our Development Process</h2>
               <p class="fs-5 text-body-secondary">
-                A glimpse into the solutions we've delivered.
+                A transparent and collaborative journey from idea to launch.
               </p>
             </div>
             <div class="row g-4">
-              <div class="col-lg-6 gsap-reveal">
-                <div class="card border-0 project-card" data-tilt>
-                  <img
-                    src="https://placehold.co/600x400/4f46e5/ffffff?text=Project+Orion"
-                    class="card-img-top"
-                    alt="Project Orion"
-                  />
-                  <div class="card-body p-4">
-                    <h3 class="fs-4 fw-bold">Project Orion</h3>
-                    <p class="text-body-secondary">
-                      A next-generation fintech platform for decentralized asset
-                      management, built with Go and React.
-                    </p>
-                  </div>
+              <div class="col-lg-3 col-md-6 gsap-reveal">
+                <div class="card h-100 p-4 border-0 process-card text-center">
+                  <h3 class="fw-bold mb-3">
+                    <span class="text-primary">01.</span> Discovery
+                  </h3>
+                  <p class="text-body-secondary">
+                    We start by understanding your vision, goals, and technical
+                    requirements through collaborative workshops.
+                  </p>
                 </div>
               </div>
-              <div class="col-lg-6 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card border-0 project-card" data-tilt>
-                  <img
-                    src="https://placehold.co/600x400/0ea5e9/ffffff?text=Project+Helia"
-                    class="card-img-top"
-                    alt="Project Helia"
-                  />
-                  <div class="card-body p-4">
-                    <h3 class="fs-4 fw-bold">Project Helia</h3>
-                    <p class="text-body-secondary">
-                      An AI-powered diagnostic tool for the healthcare industry,
-                      improving accuracy with Python and TensorFlow.
-                    </p>
-                  </div>
+              <div class="col-lg-3 col-md-6 gsap-reveal" data-gsap-delay="0.15">
+                <div class="card h-100 p-4 border-0 process-card text-center">
+                  <h3 class="fw-bold mb-3">
+                    <span class="text-primary">02.</span> Design
+                  </h3>
+                  <p class="text-body-secondary">
+                    Our UI/UX experts create intuitive wireframes and
+                    high-fidelity prototypes for a seamless user experience.
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 gsap-reveal" data-gsap-delay="0.3">
+                <div class="card h-100 p-4 border-0 process-card text-center">
+                  <h3 class="fw-bold mb-3">
+                    <span class="text-primary">03.</span> Develop
+                  </h3>
+                  <p class="text-body-secondary">
+                    Our agile development teams bring the designs to life with
+                    clean, efficient, and scalable code.
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 gsap-reveal" data-gsap-delay="0.45">
+                <div class="card h-100 p-4 border-0 process-card text-center">
+                  <h3 class="fw-bold mb-3">
+                    <span class="text-primary">04.</span> Deploy
+                  </h3>
+                  <p class="text-body-secondary">
+                    We handle the deployment process and provide ongoing support
+                    to ensure a smooth launch and continued success.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Testimonials Section -->
         <div class="py-5 bg-body-tertiary">
           <div class="container">
             <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">What Our Partners Say</h2>
+              <h2 class="display-5 fw-bold">Our Technology Stack</h2>
               <p class="fs-5 text-body-secondary">
-                We build relationships, not just software.
+                We use proven, powerful tools to build the best products.
               </p>
             </div>
-            <div class="row g-4">
-              <div class="col-lg-4 gsap-reveal">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "Innovatech isn't just a vendor; they are a true strategic
-                    partner. Their technical depth and commitment to our success
-                    were unparalleled."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=JD"
-                      class="rounded-circle me-3"
-                      alt="Jane Doe"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">Jane Doe</h5>
-                      <small class="text-body-secondary">CEO, StellarFi</small>
-                    </div>
-                  </div>
-                </div>
+            <div
+              class="d-flex justify-content-center align-items-center flex-wrap gap-5 gsap-reveal"
+            >
+              <div class="text-center tech-icon">
+                <i class="fab fa-react fa-3x"></i>
+                <p class="mb-0 mt-2 small">React</p>
               </div>
-              <div class="col-lg-4 gsap-reveal" data-gsap-delay="0.1">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "The team's ability to translate complex requirements into a
-                    seamless, elegant product was simply outstanding. They
-                    exceeded all our expectations."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=JS"
-                      class="rounded-circle me-3"
-                      alt="John Smith"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">John Smith</h5>
-                      <small class="text-body-secondary"
-                        >CTO, Apex Industries</small
-                      >
-                    </div>
-                  </div>
-                </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-angular fa-3x"></i>
+                <p class="mb-0 mt-2 small">Angular</p>
               </div>
-              <div class="col-lg-4 gsap-reveal" data-gsap-delay="0.2">
-                <div class="card h-100 border-0 testimonial-card p-4">
-                  <p class="fs-5 fst-italic">
-                    "We needed to scale fast without compromising quality.
-                    Innovatech delivered a robust, scalable architecture that
-                    has become the backbone of our operations."
-                  </p>
-                  <div class="mt-auto d-flex align-items-center">
-                    <img
-                      src="https://placehold.co/50x50/e2e8f0/1e293b?text=SC"
-                      class="rounded-circle me-3"
-                      alt="Sam Chen"
-                    />
-                    <div>
-                      <h5 class="mb-0 fw-bold">Sam Chen</h5>
-                      <small class="text-body-secondary"
-                        >Founder, QuantumLeap</small
-                      >
-                    </div>
-                  </div>
-                </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-vuejs fa-3x"></i>
+                <p class="mb-0 mt-2 small">Vue.js</p>
+              </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-node-js fa-3x"></i>
+                <p class="mb-0 mt-2 small">Node.js</p>
+              </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-python fa-3x"></i>
+                <p class="mb-0 mt-2 small">Python</p>
+              </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-golang fa-3x"></i>
+                <p class="mb-0 mt-2 small">Go</p>
+              </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-swift fa-3x"></i>
+                <p class="mb-0 mt-2 small">Swift</p>
+              </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-docker fa-3x"></i>
+                <p class="mb-0 mt-2 small">Docker</p>
+              </div>
+              <div class="text-center tech-icon">
+                <i class="fab fa-aws fa-3x"></i>
+                <p class="mb-0 mt-2 small">AWS</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Newsletter Section -->
-        <div id="newsletter-section" class="py-5">
+        <div id="cta-section" class="py-5">
           <div class="container">
             <div class="row justify-content-center">
               <div class="col-lg-8 text-center gsap-reveal">
-                <h2 class="display-5 fw-bold">Join the Future</h2>
+                <h2 class="display-5 fw-bold">Let's Build Something Amazing</h2>
                 <p class="fs-5 text-body-secondary mb-4">
-                  Subscribe to our newsletter for exclusive insights on AI,
-                  software architecture, and the future of technology.
+                  Have an idea for a groundbreaking project? We have the team
+                  and the technology to make it a reality.
                 </p>
-                <form id="home-newsletter-form" class="d-flex mw-md-75 mx-auto">
-                  <input
-                    type="email"
-                    class="form-control form-control-lg rounded-end-0"
-                    placeholder="Enter your email address"
-                    required
-                  />
-                  <button
-                    class="btn btn-primary rounded-start-0 px-4"
-                    type="submit"
-                  >
-                    Subscribe
-                  </button>
-                </form>
+                <a href="#" class="btn btn-primary btn-lg px-5">Get a Quote</a>
               </div>
             </div>
           </div>
@@ -596,7 +593,6 @@
       </section>
     </main>
 
-    <!-- Footer -->
     <footer
       class="bg-dark text-white border-top border-primary border-opacity-25"
     >
@@ -704,19 +700,16 @@
       </div>
     </footer>
 
-    <!-- JS Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
 
-    <!-- Custom JavaScript -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         gsap.registerPlugin(ScrollTrigger);
@@ -783,15 +776,7 @@
           setTheme(currentTheme === "dark" ? "light" : "dark");
         });
 
-        // --- HERO SECTION SETUP ---
-        new Typed("#typed-hero", {
-          strings: ["We Code.", "We Create.", "We Conquer."],
-          typeSpeed: 70,
-          backSpeed: 40,
-          backDelay: 2000,
-          loop: true,
-        });
-
+        // --- HERO PARTICLES ---
         function loadParticles(theme) {
           const particleColor = theme === "dark" ? "#4f46e5" : "#64748b";
           const linkColor = theme === "dark" ? "#1e293b" : "#94a3b8";
@@ -859,18 +844,6 @@
           glare: true,
           "max-glare": 0.1,
         });
-
-        // --- FORM HANDLING ---
-        const homeNewsletterForm = document.getElementById(
-          "home-newsletter-form"
-        );
-        if (homeNewsletterForm) {
-          homeNewsletterForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            alert("Thank you for subscribing!");
-            e.target.reset();
-          });
-        }
       });
     </script>
   </body>

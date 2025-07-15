@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Innovatech Solutions</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Custom CSS for animations and tweaks -->
+    <style>
+      :root {
+        --bs-body-font-family: "Inter", sans-serif;
+        --glow-primary: #4f46e5;
+        --glow-secondary: #0ea5e9;
+        --glow-primary-rgb: 79, 70, 229;
+        --glow-secondary-rgb: 14, 165, 233;
+      }
+
+      /* --- Base & Theme Styles --- */
+      body {
+        transition: background-color 0.3s, color 0.3s;
+        cursor: none;
+      }
+
+      [data-bs-theme="dark"] {
+        --bs-primary: var(--glow-primary);
+        --bs-primary-rgb: var(--glow-primary-rgb);
+        --bs-body-bg: #020617;
+        --bs-body-color: #e2e8f0;
+        --bs-tertiary-bg: #0f172a;
+        --bs-border-color: #1e293b;
+        --bs-card-bg: rgba(15, 23, 42, 0.7);
+      }
+
+      [data-bs-theme="light"] {
+        --bs-primary: #4f46e5;
+        --bs-primary-rgb: 79, 70, 229;
+        --bs-body-bg: #f1f5f9;
+        --bs-body-color: #0f172a;
+        --bs-tertiary-bg: #e2e8f0;
+        --bs-border-color: #cbd5e1;
+        --bs-card-bg: rgba(255, 255, 255, 0.7);
+      }
+
+      /* --- Page & Animation Styles --- */
+      .page.active {
+        display: block;
+        animation: fadeIn 0.8s ease-in-out;
+      }
+
+      .gsap-reveal {
+        opacity: 0;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* --- Custom Cursor --- */
+      .cursor-dot,
+      .cursor-outline {
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-radius: 50%;
+        z-index: 9999;
+        opacity: 0;
+      }
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--glow-primary);
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(var(--glow-primary-rgb), 0.2);
+        border: 2px solid rgba(var(--glow-primary-rgb), 0.5);
+        transition: transform 0.3s ease-out, background-color 0.3s,
+          border-color 0.3s;
+      }
+
+      /* --- Header & Navigation --- */
+      .navbar {
+        background-color: rgba(15, 23, 42, 0.5) !important;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid #1e293b;
+      }
+      [data-bs-theme="light"] .navbar {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .navbar-brand {
+        font-weight: 800;
+        text-shadow: 0 0 5px rgba(var(--glow-primary-rgb), 0.7);
+      }
+      .nav-link {
+        font-weight: 600;
+        transition: color 0.3s, text-shadow 0.3s;
+      }
+      .nav-link:hover,
+      .nav-link.active {
+        color: white !important;
+        text-shadow: 0 0 8px var(--glow-primary);
+      }
+      [data-bs-theme="light"] .nav-link:hover,
+      [data-bs-theme="light"] .nav-link.active {
+        color: var(--glow-primary) !important;
+        text-shadow: none;
+      }
+
+      /* --- Mobile Offcanvas Nav --- */
+      .offcanvas-nav {
+        background-color: #0f172a;
+        border-right: 1px solid #1e293b;
+      }
+      [data-bs-theme="light"] .offcanvas-nav {
+        background-color: #f8fafc;
+        border-right: 1px solid #e2e8f0;
+      }
+      .offcanvas-nav .nav-link {
+        font-size: 1.5rem;
+        padding: 0.75rem 1.5rem;
+      }
+
+      /* --- Buttons & Glow Effects --- */
+      .btn-primary {
+        background: linear-gradient(
+          45deg,
+          var(--glow-primary),
+          var(--glow-secondary)
+        );
+        border: none;
+        box-shadow: 0 0 15px rgba(var(--glow-primary-rgb), 0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px rgba(var(--glow-primary-rgb), 0.8);
+      }
+
+      /* --- Blog Page Specific Styles --- */
+      .blog-card {
+        background: var(--bs-card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--bs-border-color);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+      .blog-card-img {
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+      }
+      .blog-category {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: linear-gradient(
+          45deg,
+          var(--glow-primary),
+          var(--glow-secondary)
+        );
+        color: white;
+        border-radius: 999px;
+      }
+      .author-info img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+      .share-buttons a {
+        color: var(--bs-body-secondary);
+        font-size: 1.1rem;
+        transition: color 0.3s, transform 0.3s;
+      }
+      .share-buttons a:hover {
+        transform: scale(1.2);
+        color: var(--glow-secondary);
+      }
+      .share-buttons .copy-link-btn .copy-tooltip {
+        position: absolute;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #334155;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+        white-space: nowrap;
+      }
+      .share-buttons .copy-link-btn.copied .copy-tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Custom Cursor -->
+    <div class="cursor-outline"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Header -->
+    <header class="navbar navbar-expand-lg sticky-top">
+      <nav class="container">
+        <a class="navbar-brand fs-4" href="index.html"
+          >Innovatech<span class="text-primary">.</span></a
+        >
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="services.html">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="portfolio.html">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="blogs.html">Blogs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex align-items-center">
+          <button
+            id="theme-toggler"
+            class="btn btn-link text-body-secondary me-2 p-2"
+          ></button>
+          <a href="contact.html" class="btn btn-primary d-none d-lg-block"
+            >Get a Quote</a
+          >
+          <button
+            class="btn btn-link d-lg-none p-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileNav"
+            aria-controls="mobileNav"
+          >
+            <i class="fas fa-bars fs-4 text-body-secondary"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Offcanvas Nav -->
+    <div
+      class="offcanvas offcanvas-start offcanvas-nav"
+      tabindex="-1"
+      id="mobileNav"
+      aria-labelledby="mobileNavLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="mobileNavLabel">
+          Innovatech<span class="text-primary">.</span>
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="services.html">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="portfolio.html">Portfolio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="blog.html">Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item mt-4">
+            <a href="contact.html" class="btn btn-primary w-100">Get a Quote</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <main>
+      <!-- Blog Page -->
+      <section id="blog-page" class="page active">
+        <!-- Hero Section -->
+        <div class="py-5 text-center">
+          <div class="container">
+            <h1 class="display-3 fw-bold gsap-reveal">Innovatech Insights</h1>
+            <p
+              class="fs-5 text-body-secondary col-md-8 mx-auto my-4 gsap-reveal"
+              data-gsap-delay="0.2"
+            >
+              Exploring the frontiers of technology, software architecture, and
+              digital innovation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Blog Grid Section -->
+        <div class="py-5 bg-body-tertiary">
+          <div class="container">
+            <div class="row g-4">
+              <!-- Blog Post 1 -->
+              <div class="col-lg-4 col-md-6 gsap-reveal">
+                <div class="blog-card h-100 d-flex flex-column">
+                  <img
+                    src="https://images.unsplash.com/photo-1579684385127-6ab18a5d7814?q=80&w=1974&auto=format&fit=crop"
+                    class="card-img-top blog-card-img"
+                    alt="AI in Healthcare"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x400/4f46e5/ffffff?text=AI+in+Healthcare';"
+                  />
+                  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                    <div class="mb-3">
+                      <span class="blog-category">AI/ML</span>
+                    </div>
+                    <h4 class="fw-bold">
+                      The AI Revolution in Healthcare Diagnostics
+                    </h4>
+                    <p class="text-body-secondary small flex-grow-1">
+                      Discover how artificial intelligence is transforming
+                      medical diagnostics, leading to earlier detection and more
+                      personalized treatment plans.
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-4"
+                    >
+                      <div class="author-info d-flex align-items-center">
+                        <img
+                          src="https://placehold.co/50x50/e2e8f0/1e293b?text=JS"
+                          class="rounded-circle me-2"
+                          alt="John Smith"
+                        />
+                        <div>
+                          <small class="fw-bold d-block">John Smith</small>
+                          <small class="text-body-secondary"
+                            >July 15, 2025</small
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="share-buttons d-flex align-items-center gap-3"
+                      >
+                        <a
+                          href="#"
+                          class="share-whatsapp"
+                          title="Share on WhatsApp"
+                          ><i class="fab fa-whatsapp"></i
+                        ></a>
+                        <a href="#" class="share-twitter" title="Share on X"
+                          ><i class="fab fa-twitter"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="share-facebook"
+                          title="Share on Facebook"
+                          ><i class="fab fa-facebook-f"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="copy-link-btn position-relative"
+                          title="Copy Link"
+                          ><i class="fas fa-link"></i
+                          ><span class="copy-tooltip">Copied!</span></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Blog Post 2 -->
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.1">
+                <div class="blog-card h-100 d-flex flex-column">
+                  <img
+                    src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop"
+                    class="card-img-top blog-card-img"
+                    alt="DevOps Culture"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x400/0ea5e9/ffffff?text=DevOps+Culture';"
+                  />
+                  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                    <div class="mb-3">
+                      <span class="blog-category">DevOps</span>
+                    </div>
+                    <h4 class="fw-bold">
+                      Beyond the Tools: Cultivating a True DevOps Culture
+                    </h4>
+                    <p class="text-body-secondary small flex-grow-1">
+                      DevOps is more than just CI/CD pipelines. We explore the
+                      cultural shifts required to break down silos and build
+                      high-performing, collaborative teams.
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-4"
+                    >
+                      <div class="author-info d-flex align-items-center">
+                        <img
+                          src="https://placehold.co/50x50/e2e8f0/1e293b?text=JD"
+                          class="rounded-circle me-2"
+                          alt="Jane Doe"
+                        />
+                        <div>
+                          <small class="fw-bold d-block">Jane Doe</small>
+                          <small class="text-body-secondary"
+                            >July 10, 2025</small
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="share-buttons d-flex align-items-center gap-3"
+                      >
+                        <a
+                          href="#"
+                          class="share-whatsapp"
+                          title="Share on WhatsApp"
+                          ><i class="fab fa-whatsapp"></i
+                        ></a>
+                        <a href="#" class="share-twitter" title="Share on X"
+                          ><i class="fab fa-twitter"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="share-facebook"
+                          title="Share on Facebook"
+                          ><i class="fab fa-facebook-f"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="copy-link-btn position-relative"
+                          title="Copy Link"
+                          ><i class="fas fa-link"></i
+                          ><span class="copy-tooltip">Copied!</span></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Blog Post 3 -->
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.2">
+                <div class="blog-card h-100 d-flex flex-column">
+                  <img
+                    src="https://images.unsplash.com/photo-1553877522-976993a1a128?q=80&w=2070&auto=format&fit=crop"
+                    class="card-img-top blog-card-img"
+                    alt="UI vs UX"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x400/10b981/ffffff?text=UI+vs+UX';"
+                  />
+                  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                    <div class="mb-3">
+                      <span class="blog-category">Design</span>
+                    </div>
+                    <h4 class="fw-bold">
+                      UI vs. UX: Deconstructing the Two Pillars of Great Design
+                    </h4>
+                    <p class="text-body-secondary small flex-grow-1">
+                      While often used interchangeably, UI and UX are distinct
+                      disciplines. We break down the key differences and explain
+                      why both are vital for product success.
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-4"
+                    >
+                      <div class="author-info d-flex align-items-center">
+                        <img
+                          src="https://placehold.co/50x50/e2e8f0/1e293b?text=SC"
+                          class="rounded-circle me-2"
+                          alt="Sam Chen"
+                        />
+                        <div>
+                          <small class="fw-bold d-block">Sam Chen</small>
+                          <small class="text-body-secondary"
+                            >July 5, 2025</small
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="share-buttons d-flex align-items-center gap-3"
+                      >
+                        <a
+                          href="#"
+                          class="share-whatsapp"
+                          title="Share on WhatsApp"
+                          ><i class="fab fa-whatsapp"></i
+                        ></a>
+                        <a href="#" class="share-twitter" title="Share on X"
+                          ><i class="fab fa-twitter"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="share-facebook"
+                          title="Share on Facebook"
+                          ><i class="fab fa-facebook-f"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="copy-link-btn position-relative"
+                          title="Copy Link"
+                          ><i class="fas fa-link"></i
+                          ><span class="copy-tooltip">Copied!</span></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Blog Post 4 -->
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.0">
+                <div class="blog-card h-100 d-flex flex-column">
+                  <img
+                    src="https://images.unsplash.com/photo-1614064548237-0965373f3014?q=80&w=1974&auto=format&fit=crop"
+                    class="card-img-top blog-card-img"
+                    alt="Quantum Computing"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x400/f59e0b/ffffff?text=Quantum+Computing';"
+                  />
+                  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                    <div class="mb-3">
+                      <span class="blog-category">Future Tech</span>
+                    </div>
+                    <h4 class="fw-bold">
+                      Quantum Computing: Next Frontier or Sci-Fi?
+                    </h4>
+                    <p class="text-body-secondary small flex-grow-1">
+                      We demystify the complex world of quantum computing,
+                      exploring its potential to solve currently unsolvable
+                      problems and reshape industries.
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-4"
+                    >
+                      <div class="author-info d-flex align-items-center">
+                        <img
+                          src="https://placehold.co/50x50/e2e8f0/1e293b?text=JS"
+                          class="rounded-circle me-2"
+                          alt="John Smith"
+                        />
+                        <div>
+                          <small class="fw-bold d-block">John Smith</small>
+                          <small class="text-body-secondary"
+                            >June 28, 2025</small
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="share-buttons d-flex align-items-center gap-3"
+                      >
+                        <a
+                          href="#"
+                          class="share-whatsapp"
+                          title="Share on WhatsApp"
+                          ><i class="fab fa-whatsapp"></i
+                        ></a>
+                        <a href="#" class="share-twitter" title="Share on X"
+                          ><i class="fab fa-twitter"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="share-facebook"
+                          title="Share on Facebook"
+                          ><i class="fab fa-facebook-f"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="copy-link-btn position-relative"
+                          title="Copy Link"
+                          ><i class="fas fa-link"></i
+                          ><span class="copy-tooltip">Copied!</span></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Blog Post 5 -->
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.1">
+                <div class="blog-card h-100 d-flex flex-column">
+                  <img
+                    src="https://images.unsplash.com/photo-1516131206008-dd041a372dd4?q=80&w=2070&auto=format&fit=crop"
+                    class="card-img-top blog-card-img"
+                    alt="Microservices Architecture"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x400/ec4899/ffffff?text=Microservices';"
+                  />
+                  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                    <div class="mb-3">
+                      <span class="blog-category">Architecture</span>
+                    </div>
+                    <h4 class="fw-bold">
+                      Microservices vs. Monoliths: A Guide
+                    </h4>
+                    <p class="text-body-secondary small flex-grow-1">
+                      Choosing the right software architecture is critical. We
+                      weigh the pros and cons of microservices and monolithic
+                      approaches to help you decide.
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-4"
+                    >
+                      <div class="author-info d-flex align-items-center">
+                        <img
+                          src="https://placehold.co/50x50/e2e8f0/1e293b?text=JD"
+                          class="rounded-circle me-2"
+                          alt="Jane Doe"
+                        />
+                        <div>
+                          <small class="fw-bold d-block">Jane Doe</small>
+                          <small class="text-body-secondary"
+                            >June 21, 2025</small
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="share-buttons d-flex align-items-center gap-3"
+                      >
+                        <a
+                          href="#"
+                          class="share-whatsapp"
+                          title="Share on WhatsApp"
+                          ><i class="fab fa-whatsapp"></i
+                        ></a>
+                        <a href="#" class="share-twitter" title="Share on X"
+                          ><i class="fab fa-twitter"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="share-facebook"
+                          title="Share on Facebook"
+                          ><i class="fab fa-facebook-f"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="copy-link-btn position-relative"
+                          title="Copy Link"
+                          ><i class="fas fa-link"></i
+                          ><span class="copy-tooltip">Copied!</span></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Blog Post 6 -->
+              <div class="col-lg-4 col-md-6 gsap-reveal" data-gsap-delay="0.2">
+                <div class="blog-card h-100 d-flex flex-column">
+                  <img
+                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop"
+                    class="card-img-top blog-card-img"
+                    alt="Future of Web Dev"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x400/8b5cf6/ffffff?text=Web+Dev+Future';"
+                  />
+                  <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                    <div class="mb-3">
+                      <span class="blog-category">Web Dev</span>
+                    </div>
+                    <h4 class="fw-bold">
+                      The Future of the Web: Beyond JavaScript
+                    </h4>
+                    <p class="text-body-secondary small flex-grow-1">
+                      With the rise of WebAssembly (WASM), are we moving into a
+                      post-JavaScript era? We explore the potential of new web
+                      technologies.
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-4"
+                    >
+                      <div class="author-info d-flex align-items-center">
+                        <img
+                          src="https://placehold.co/50x50/e2e8f0/1e293b?text=SC"
+                          class="rounded-circle me-2"
+                          alt="Sam Chen"
+                        />
+                        <div>
+                          <small class="fw-bold d-block">Sam Chen</small>
+                          <small class="text-body-secondary"
+                            >June 14, 2025</small
+                          >
+                        </div>
+                      </div>
+                      <div
+                        class="share-buttons d-flex align-items-center gap-3"
+                      >
+                        <a
+                          href="#"
+                          class="share-whatsapp"
+                          title="Share on WhatsApp"
+                          ><i class="fab fa-whatsapp"></i
+                        ></a>
+                        <a href="#" class="share-twitter" title="Share on X"
+                          ><i class="fab fa-twitter"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="share-facebook"
+                          title="Share on Facebook"
+                          ><i class="fab fa-facebook-f"></i
+                        ></a>
+                        <a
+                          href="#"
+                          class="copy-link-btn position-relative"
+                          title="Copy Link"
+                          ><i class="fas fa-link"></i
+                          ><span class="copy-tooltip">Copied!</span></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-dark text-white border-top border-primary border-opacity-25"
+    >
+      <div class="container py-5">
+        <div class="row g-4">
+          <div class="col-lg-3">
+            <h3 class="fs-4 fw-bold mb-3">
+              Innovatech<span class="text-primary">.</span>
+            </h3>
+            <p class="text-white-50">
+              Building the future of software, one line of code at a time.
+            </p>
+          </div>
+          <div class="col-6 col-lg-2">
+            <h5 class="fw-bold mb-3">Links</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a
+                  href="about.html"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >About Us</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="services.html"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >Services</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="portfolio.html"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >Portfolio</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-2">
+            <h5 class="fw-bold mb-3">Connect</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a
+                  href="contact.html"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >Contact Us</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="#"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >LinkedIn</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="#"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >Twitter</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-2">
+            <h5 class="fw-bold mb-3">Policies</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a
+                  href="privacy-policy.html"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="terms-of-service.html"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >Terms of Service</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="cookies-policy.html"
+                  class="text-white-50 text-decoration-none hover-primary"
+                  >Cookies Policy</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <h5 class="fw-bold mb-3">Have a Project?</h5>
+            <p class="text-white-50">
+              Let's turn your idea into reality. Get in touch with our experts
+              today.
+            </p>
+            <a href="contact.html" class="btn btn-primary">Get a Quote</a>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="text-center text-white-50">
+          <p>&copy; 2025 Innovatech Solutions. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JS Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- CURSOR LOGIC ---
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        let isCursorVisible = false;
+
+        window.addEventListener("mousemove", (e) => {
+          const { clientX, clientY } = e;
+          if (!isCursorVisible) {
+            gsap.to([cursorDot, cursorOutline], { opacity: 1, duration: 0.3 });
+            isCursorVisible = true;
+          }
+          gsap.to(cursorDot, {
+            x: clientX,
+            y: clientY,
+            duration: 0.1,
+            ease: "power2.out",
+          });
+          gsap.to(cursorOutline, {
+            x: clientX,
+            y: clientY,
+            duration: 0.5,
+            ease: "power2.out",
+          });
+        });
+
+        document.querySelectorAll("a, button, [data-tilt]").forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            gsap.to(cursorOutline, {
+              scale: 1.5,
+              backgroundColor: "rgba(var(--glow-secondary-rgb), 0.3)",
+              borderColor: "rgba(var(--glow-secondary-rgb), 0.7)",
+              duration: 0.3,
+            });
+          });
+          el.addEventListener("mouseleave", () => {
+            gsap.to(cursorOutline, {
+              scale: 1,
+              backgroundColor: "rgba(var(--glow-primary-rgb), 0.2)",
+              borderColor: "rgba(var(--glow-primary-rgb), 0.5)",
+              duration: 0.3,
+            });
+          });
+        });
+
+        // --- THEME TOGGLER ---
+        const themeToggler = document.getElementById("theme-toggler");
+        const htmlEl = document.documentElement;
+        const moonIcon = `<i class="fas fa-moon"></i>`;
+        const sunIcon = `<i class="fas fa-sun"></i>`;
+        themeToggler.innerHTML =
+          localStorage.getItem("theme") === "light" ? moonIcon : sunIcon;
+
+        const setTheme = (theme) => {
+          htmlEl.setAttribute("data-bs-theme", theme);
+          themeToggler.innerHTML = theme === "dark" ? sunIcon : moonIcon;
+          localStorage.setItem("theme", theme);
+        };
+
+        themeToggler.addEventListener("click", () => {
+          const currentTheme = htmlEl.getAttribute("data-bs-theme");
+          setTheme(currentTheme === "dark" ? "light" : "dark");
+        });
+
+        // --- GSAP SCROLL ANIMATIONS ---
+        function setupGsapAnimations() {
+          gsap.utils.toArray(".gsap-reveal").forEach((el) => {
+            gsap.fromTo(
+              el,
+              { y: 60, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 1.2,
+                ease: "power3.out",
+                delay: parseFloat(el.dataset.gsapDelay) || 0,
+                scrollTrigger: {
+                  trigger: el,
+                  start: "top 90%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          });
+        }
+
+        // --- SOCIAL SHARE LOGIC ---
+        document.querySelectorAll(".blog-card").forEach((card) => {
+          const title = card.querySelector("h4").textContent;
+          const url = window.location.href; // Using current page URL as a placeholder
+
+          const encodedTitle = encodeURIComponent(title);
+          const encodedUrl = encodeURIComponent(url);
+
+          const whatsappBtn = card.querySelector(".share-whatsapp");
+          const twitterBtn = card.querySelector(".share-twitter");
+          const facebookBtn = card.querySelector(".share-facebook");
+          const copyBtn = card.querySelector(".copy-link-btn");
+
+          whatsappBtn.href = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+          twitterBtn.href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+          facebookBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+
+          whatsappBtn.target = "_blank";
+          twitterBtn.target = "_blank";
+          facebookBtn.target = "_blank";
+
+          copyBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const tempInput = document.createElement("input");
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            copyBtn.classList.add("copied");
+            setTimeout(() => {
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          });
+        });
+
+        // --- INITIALIZE ON LOAD ---
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        setTheme(savedTheme);
+        setupGsapAnimations();
+        VanillaTilt.init(document.querySelectorAll(".blog-card"), {
+          max: 5,
+          speed: 400,
+          glare: true,
+          "max-glare": 0.1,
+        });
+      });
+    </script>
+  </body>
+</html>
