@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - Innovatech Solutions</title>
+    <title>Privacy Policy - Innovatech Solutions</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -28,14 +28,6 @@
       xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
-    />
-
-    <!-- Leaflet CSS for Map -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
     />
 
     <!-- Custom CSS for animations and tweaks -->
@@ -75,15 +67,11 @@
       }
 
       /* --- Page & Animation Styles --- */
-      .page {
-        display: none;
-      }
       .page.active {
         display: block;
         animation: fadeIn 0.8s ease-in-out;
       }
 
-      /* Hide elements for GSAP */
       .gsap-reveal {
         opacity: 0;
       }
@@ -106,7 +94,7 @@
         left: 0;
         border-radius: 50%;
         z-index: 9999;
-        opacity: 0; /* Start hidden, will be shown by JS */
+        opacity: 0;
       }
       .cursor-dot {
         width: 8px;
@@ -181,112 +169,38 @@
         box-shadow: 0 0 25px rgba(var(--glow-primary-rgb), 0.8);
       }
 
-      /* --- Hero Section --- */
-      #hero-section {
-        position: relative;
-        height: 60vh;
-        min-height: 450px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-      }
-      #tsparticles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-      }
-      .hero-content {
-        position: relative;
-        z-index: 1;
-      }
-
-      /* --- Contact Page Specific Styles --- */
-      .contact-card {
+      /* --- Policy Page Specific Styles --- */
+      .policy-content {
         background: var(--bs-card-bg);
         backdrop-filter: blur(10px);
         border: 1px solid var(--bs-border-color);
         border-radius: 0.75rem;
+        padding: 2rem 3rem;
       }
-      .contact-info-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1.5rem;
-      }
-      .contact-info-item .icon {
-        width: 48px;
-        height: 48px;
-        flex-shrink: 0;
-        background: linear-gradient(
-          45deg,
-          var(--glow-primary),
-          var(--glow-secondary)
-        );
-        color: white;
-        font-size: 1.25rem;
-        box-shadow: 0 0 15px rgba(var(--glow-primary-rgb), 0.5);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 1rem;
-      }
-      .form-control {
-        background-color: var(--bs-tertiary-bg);
-        border: 1px solid var(--bs-border-color);
-      }
-      .form-control:focus {
-        background-color: var(--bs-tertiary-bg);
-        border-color: var(--glow-primary);
-        box-shadow: 0 0 0 0.25rem rgba(var(--glow-primary-rgb), 0.25);
-      }
-
-      /* Map Styles */
-      #map {
-        height: 450px;
-        border-radius: 0.75rem;
-        border: 1px solid var(--bs-border-color);
-        z-index: 1; /* Ensure map is clickable */
-      }
-      .leaflet-control-attribution a,
-      .leaflet-control-zoom a {
-        color: var(--glow-primary) !important;
-      }
-      .leaflet-tile-pane {
-        filter: grayscale(1);
-      }
-      [data-bs-theme="dark"] .leaflet-tile-pane {
-        filter: invert(1) grayscale(1) brightness(0.8);
-      }
-
-      /* Custom Notification */
-      #notification {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        background: var(--bs-card-bg);
-        backdrop-filter: blur(10px);
+      .policy-content h2 {
+        font-weight: 700;
         color: var(--bs-body-color);
-        padding: 1rem 1.5rem;
-        border-radius: 0.5rem;
-        border: 1px solid var(--bs-border-color);
-        border-left: 4px solid var(--glow-secondary);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        opacity: 0;
-        transform: translateX(100%);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-        pointer-events: none;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
       }
-      #notification.show {
-        opacity: 1;
-        transform: translateX(0);
+      .policy-content h3 {
+        font-weight: 600;
+        color: var(--bs-body-color);
+        margin-bottom: 0.75rem;
+        margin-top: 1.5rem;
       }
-      #notification .icon {
+      .policy-content p,
+      .policy-content li {
+        color: var(--bs-body-secondary);
+        line-height: 1.8;
+      }
+      .policy-content a {
         color: var(--glow-secondary);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .policy-content a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
@@ -295,32 +209,16 @@
     <div class="cursor-outline"></div>
     <div class="cursor-dot"></div>
 
-    <!-- Custom Notification -->
-    <div id="notification">
-      <div class="d-flex align-items-center">
-        <i class="fas fa-check-circle fs-4 me-3 icon"></i>
-        <div>
-          <h6 class="mb-0 fw-bold">Success!</h6>
-          <p class="mb-0 small">Our team will get back to you shortly.</p>
-        </div>
-      </div>
-    </div>
-
     <!-- Header -->
     <header class="navbar navbar-expand-lg sticky-top">
       <nav class="container">
         <a class="navbar-brand fs-4" href="index.html"
           >Innovatech<span class="text-primary">.</span></a
         >
-
-        <!-- Desktop Nav -->
         <div class="collapse navbar-collapse" id="mainNavbar">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="services.html">Services</a>
@@ -329,25 +227,22 @@
               <a class="nav-link" href="portfolio.html">Portfolio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="blog.html">Blogs</a>
+              <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="contact.html">Contact</a>
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
             </li>
           </ul>
         </div>
-
         <div class="d-flex align-items-center">
           <button
             id="theme-toggler"
             class="btn btn-link text-body-secondary me-2 p-2"
-          >
-            <!-- Icon will be inserted by JS -->
-          </button>
-          <a href="contact.html" class="btn btn-primary d-none d-lg-block"
-            >Get a Quote</a
-          >
-          <!-- Mobile Menu Toggler -->
+          ></button>
+          <a href="#" class="btn btn-primary d-none d-lg-block">Get a Quote</a>
           <button
             class="btn btn-link d-lg-none p-2"
             type="button"
@@ -385,166 +280,196 @@
             <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="services.html">Services</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="portfolio.html">Portfolio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="blog.html">Blogs</a>
+            <a class="nav-link" href="about.html">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="contact.html">Contact</a>
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="blog.html">Blog</a>
           </li>
           <li class="nav-item mt-4">
-            <a href="contact.html" class="btn btn-primary w-100">Get a Quote</a>
+            <a href="#" class="btn btn-primary w-100">Get a Quote</a>
           </li>
         </ul>
       </div>
     </div>
 
     <main>
-      <!-- Contact Page -->
-      <section id="contact-page" class="page active">
+      <!-- Privacy Policy Page -->
+      <section id="policy-page" class="page active">
         <!-- Hero Section -->
-        <div id="hero-section">
-          <div id="tsparticles"></div>
-          <div class="hero-content text-center">
-            <div class="container">
-              <h1 class="display-3 fw-bold gsap-reveal">Get In Touch</h1>
-              <p
-                class="fs-5 text-body-secondary col-md-8 mx-auto my-4 gsap-reveal"
-                data-gsap-delay="0.2"
-              >
-                Have a project in mind or just want to say hello? We'd love to
-                hear from you.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact Form & Info Section -->
-        <div class="py-5">
+        <div class="py-5 text-center">
           <div class="container">
-            <div class="contact-card p-4 p-lg-5">
-              <div class="row g-5">
-                <!-- Contact Info -->
-                <div class="col-lg-5 gsap-reveal">
-                  <h2 class="fw-bold mb-4">Contact Information</h2>
-                  <div class="contact-info-item">
-                    <div class="icon">
-                      <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div>
-                      <h5 class="fw-bold mb-0">Our Office</h5>
-                      <p class="text-body-secondary mb-0">
-                        123 Tech Park, Indore, MP, India
-                      </p>
-                    </div>
-                  </div>
-                  <div class="contact-info-item">
-                    <div class="icon"><i class="fas fa-envelope"></i></div>
-                    <div>
-                      <h5 class="fw-bold mb-0">Email Us</h5>
-                      <a
-                        href="mailto:hello@innovatech.com"
-                        class="text-body-secondary text-decoration-none"
-                        >hello@innovatech.com</a
-                      >
-                    </div>
-                  </div>
-                  <div class="contact-info-item">
-                    <div class="icon"><i class="fas fa-phone"></i></div>
-                    <div>
-                      <h5 class="fw-bold mb-0">Call Us</h5>
-                      <a
-                        href="tel:+911234567890"
-                        class="text-body-secondary text-decoration-none"
-                        >+91 123-456-7890</a
-                      >
-                    </div>
-                  </div>
-                  <hr class="my-4" />
-                  <h5 class="fw-bold mb-3">Business Hours</h5>
-                  <p class="text-body-secondary">
-                    Monday - Friday: 9:00 AM - 6:00 PM
-                  </p>
-                  <p class="text-body-secondary">Saturday & Sunday: Closed</p>
-                </div>
-
-                <!-- Contact Form -->
-                <div class="col-lg-7 gsap-reveal" data-gsap-delay="0.2">
-                  <h2 class="fw-bold mb-4">Send Us a Message</h2>
-                  <form id="contact-form" novalidate>
-                    <div class="row g-3">
-                      <div class="col-md-6">
-                        <label for="name" class="form-label">Full Name</label>
-                        <input
-                          type="text"
-                          class="form-control form-control-lg"
-                          id="name"
-                          required
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <label for="email" class="form-label"
-                          >Email Address</label
-                        >
-                        <input
-                          type="email"
-                          class="form-control form-control-lg"
-                          id="email"
-                          required
-                        />
-                      </div>
-                      <div class="col-12">
-                        <label for="subject" class="form-label">Subject</label>
-                        <input
-                          type="text"
-                          class="form-control form-control-lg"
-                          id="subject"
-                          required
-                        />
-                      </div>
-                      <div class="col-12">
-                        <label for="message" class="form-label">Message</label>
-                        <textarea
-                          class="form-control form-control-lg"
-                          id="message"
-                          rows="5"
-                          required
-                        ></textarea>
-                      </div>
-                      <div class="col-12">
-                        <button
-                          type="submit"
-                          class="btn btn-primary btn-lg w-100"
-                        >
-                          Send Message
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+            <h1 class="display-3 fw-bold gsap-reveal">Privacy Policy</h1>
+            <p
+              class="fs-5 text-body-secondary col-md-8 mx-auto my-4 gsap-reveal"
+              data-gsap-delay="0.2"
+            >
+              Your privacy is important to us. We are committed to protecting
+              your personal data.
+            </p>
           </div>
         </div>
 
-        <!-- Map Section -->
+        <!-- Policy Content Section -->
         <div class="py-5 bg-body-tertiary">
           <div class="container">
-            <div class="text-center mb-5 gsap-reveal">
-              <h2 class="display-5 fw-bold">Find Us Here</h2>
-              <p class="fs-5 text-body-secondary">
-                Visit our office in the heart of Indore's tech hub.
+            <div class="policy-content gsap-reveal">
+              <p class="text-body-secondary">Last updated: July 16, 2025</p>
+
+              <h2>1. Introduction</h2>
+              <p>
+                Welcome to Innovatech Solutions ("we," "our," or "us"). We are
+                committed to protecting your personal information and your right
+                to privacy. If you have any questions or concerns about this
+                privacy notice, or our practices with regards to your personal
+                information, please contact us at
+                <a href="mailto:privacy@innovatech.com"
+                  >privacy@innovatech.com</a
+                >.
               </p>
-            </div>
-            <div class="gsap-reveal">
-              <div id="map"></div>
+              <p>
+                This privacy notice describes how we might use your information
+                if you visit our website at
+                <a href="https://www.innovatech.com">www.innovatech.com</a>, or
+                otherwise engage with us. In this privacy notice, if we refer to
+                "Website," we are referring to any website of ours that
+                references or links to this policy.
+              </p>
+
+              <h2>2. What Information Do We Collect?</h2>
+              <h3>Personal Information You Disclose to Us</h3>
+              <p>
+                We collect personal information that you voluntarily provide to
+                us when you express an interest in obtaining information about
+                us or our products and Services, when you participate in
+                activities on the Website (such as posting messages in our
+                online forums or entering competitions, contests or giveaways)
+                or otherwise when you contact us.
+              </p>
+              <p>
+                The personal information that we collect depends on the context
+                of your interactions with us and the Website, the choices you
+                make and the products and features you use. The personal
+                information we collect may include the following: name, phone
+                number, email address, mailing address, job titles, and other
+                similar information.
+              </p>
+
+              <h3>Information Automatically Collected</h3>
+              <p>
+                We automatically collect certain information when you visit, use
+                or navigate the Website. This information does not reveal your
+                specific identity (like your name or contact information) but
+                may include device and usage information, such as your IP
+                address, browser and device characteristics, operating system,
+                language preferences, referring URLs, device name, country,
+                location, information about how and when you use our Website and
+                other technical information.
+              </p>
+
+              <h2>3. How Do We Use Your Information?</h2>
+              <p>
+                We use personal information collected via our Website for a
+                variety of business purposes described below. We process your
+                personal information for these purposes in reliance on our
+                legitimate business interests, in order to enter into or perform
+                a contract with you, with your consent, and/or for compliance
+                with our legal obligations. We use the information we collect or
+                receive:
+              </p>
+              <ul>
+                <li>To send administrative information to you.</li>
+                <li>To protect our Services.</li>
+                <li>
+                  To enforce our terms, conditions and policies for business
+                  purposes, to comply with legal and regulatory requirements or
+                  in connection with our contract.
+                </li>
+                <li>To respond to legal requests and prevent harm.</li>
+                <li>
+                  To deliver and facilitate delivery of services to the user.
+                </li>
+                <li>To respond to user inquiries/offer support to users.</li>
+                <li>To send you marketing and promotional communications.</li>
+              </ul>
+
+              <h2>4. Will Your Information Be Shared With Anyone?</h2>
+              <p>
+                We only share information with your consent, to comply with
+                laws, to provide you with services, to protect your rights, or
+                to fulfill business obligations.
+              </p>
+
+              <h2>5. Do We Use Cookies and Other Tracking Technologies?</h2>
+              <p>
+                We may use cookies and similar tracking technologies (like web
+                beacons and pixels) to access or store information. Specific
+                information about how we use such technologies and how you can
+                refuse certain cookies is set out in our Cookies Policy.
+              </p>
+
+              <h2>6. How Long Do We Keep Your Information?</h2>
+              <p>
+                We will only keep your personal information for as long as it is
+                necessary for the purposes set out in this privacy notice,
+                unless a longer retention period is required or permitted by law
+                (such as tax, accounting or other legal requirements).
+              </p>
+
+              <h2>7. How Do We Keep Your Information Safe?</h2>
+              <p>
+                We have implemented appropriate technical and organizational
+                security measures designed to protect the security of any
+                personal information we process. However, despite our safeguards
+                and efforts to secure your information, no electronic
+                transmission over the Internet or information storage technology
+                can be guaranteed to be 100% secure.
+              </p>
+
+              <h2>8. What Are Your Privacy Rights?</h2>
+              <p>
+                In some regions (like the European Economic Area), you have
+                certain rights under applicable data protection laws. These may
+                include the right (i) to request access and obtain a copy of
+                your personal information, (ii) to request rectification or
+                erasure; (iii) to restrict the processing of your personal
+                information; and (iv) if applicable, to data portability. In
+                certain circumstances, you may also have the right to object to
+                the processing of your personal information.
+              </p>
+
+              <h2>9. Changes To This Notice</h2>
+              <p>
+                We may update this privacy notice from time to time. The updated
+                version will be indicated by an updated "Revised" date and the
+                updated version will be effective as soon as it is accessible.
+                We encourage you to review this privacy notice frequently to be
+                informed of how we are protecting your information.
+              </p>
+
+              <h2>10. How Can You Contact Us About This Notice?</h2>
+              <p>
+                If you have questions or comments about this notice, you may
+                email us at
+                <a href="mailto:privacy@innovatech.com"
+                  >privacy@innovatech.com</a
+                >
+                or by post to:
+              </p>
+              <p>
+                Innovatech Solutions<br />
+                123 Tech Park<br />
+                Indore, Madhya Pradesh, 452001<br />
+                India
+              </p>
             </div>
           </div>
         </div>
@@ -622,14 +547,14 @@
               </li>
               <li class="mb-2">
                 <a
-                  href="terms-of-service.html"
+                  href="#"
                   class="text-white-50 text-decoration-none hover-primary"
                   >Terms of Service</a
                 >
               </li>
               <li class="mb-2">
                 <a
-                  href="cookies-policy.html"
+                  href="#"
                   class="text-white-50 text-decoration-none hover-primary"
                   >Cookies Policy</a
                 >
@@ -642,7 +567,7 @@
               Let's turn your idea into reality. Get in touch with our experts
               today.
             </p>
-            <a href="contact.html" class="btn btn-primary">Get a Quote</a>
+            <a href="#" class="btn btn-primary">Get a Quote</a>
           </div>
         </div>
         <hr class="my-4" />
@@ -660,15 +585,7 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
-
-    <!-- Leaflet JS for Map -->
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
 
     <!-- Custom JavaScript -->
     <script>
@@ -724,55 +641,19 @@
         const htmlEl = document.documentElement;
         const moonIcon = `<i class="fas fa-moon"></i>`;
         const sunIcon = `<i class="fas fa-sun"></i>`;
+        themeToggler.innerHTML =
+          localStorage.getItem("theme") === "light" ? moonIcon : sunIcon;
 
         const setTheme = (theme) => {
           htmlEl.setAttribute("data-bs-theme", theme);
           themeToggler.innerHTML = theme === "dark" ? sunIcon : moonIcon;
           localStorage.setItem("theme", theme);
-          if (document.getElementById("tsparticles")) {
-            loadParticles(theme);
-          }
         };
 
         themeToggler.addEventListener("click", () => {
           const currentTheme = htmlEl.getAttribute("data-bs-theme");
           setTheme(currentTheme === "dark" ? "light" : "dark");
         });
-
-        // --- HERO PARTICLES ---
-        function loadParticles(theme) {
-          const particleColor = theme === "dark" ? "#4f46e5" : "#64748b";
-          const linkColor = theme === "dark" ? "#1e293b" : "#94a3b8";
-          tsParticles.load("tsparticles", {
-            fpsLimit: 60,
-            interactivity: {
-              events: { onHover: { enable: true, mode: "repulse" } },
-            },
-            particles: {
-              color: { value: particleColor },
-              links: {
-                color: linkColor,
-                distance: 150,
-                enable: true,
-                opacity: 0.2,
-                width: 1,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outModes: { default: "bounce" },
-                random: false,
-                speed: 1,
-                straight: false,
-              },
-              number: { density: { enable: true, area: 800 }, value: 80 },
-              opacity: { value: 0.3 },
-              shape: { type: "circle" },
-              size: { value: { min: 1, max: 5 } },
-            },
-            detectRetina: true,
-          });
-        }
 
         // --- GSAP SCROLL ANIMATIONS ---
         function setupGsapAnimations() {
@@ -796,67 +677,10 @@
           });
         }
 
-        // --- CONTACT FORM & NOTIFICATION ---
-        const contactForm = document.getElementById("contact-form");
-        const notification = document.getElementById("notification");
-
-        if (contactForm) {
-          contactForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            // Show custom notification instead of an alert
-            notification.classList.add("show");
-
-            // Reset form after a short delay
-            setTimeout(() => {
-              contactForm.reset();
-            }, 500);
-
-            // Hide notification after 5 seconds
-            setTimeout(() => {
-              notification.classList.remove("show");
-            }, 5000);
-          });
-        }
-
-        // --- LEAFLET MAP INITIALIZATION ---
-        function initMap() {
-          // Coordinates for Indore, Madhya Pradesh, India
-          const lat = 22.7196;
-          const lng = 75.8577;
-
-          const map = L.map("map").setView([lat, lng], 14);
-
-          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          }).addTo(map);
-
-          const customIcon = L.divIcon({
-            className: "custom-div-icon",
-            html: `<div style="background-color:var(--glow-primary);width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px var(--glow-primary);"><i class="fas fa-map-marker-alt" style="color:white;"></i></div>`,
-            iconSize: [30, 42],
-            iconAnchor: [15, 42],
-          });
-
-          L.marker([lat, lng], { icon: customIcon })
-            .addTo(map)
-            .bindPopup(
-              "<b>Innovatech Solutions</b><br>123 Tech Park, Indore, MP."
-            )
-            .openPopup();
-        }
-
         // --- INITIALIZE ON LOAD ---
         const savedTheme = localStorage.getItem("theme") || "dark";
         setTheme(savedTheme);
         setupGsapAnimations();
-        initMap();
-        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-          max: 5,
-          speed: 400,
-          glare: true,
-          "max-glare": 0.1,
-        });
       });
     </script>
   </body>
