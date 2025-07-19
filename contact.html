@@ -3,7 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - Appify Tecno</title>
+    <title>Contact Appify Tecno | Get a Quote for Your Project</title>
+    <meta
+      name="description"
+      content="Ready to start your project? Contact Appify Tecno today for a free consultation and quote. Let's discuss your web or mobile app development needs."
+    />
+    <meta
+      name="keywords"
+      content="contact appify tecno, get a quote, project consultation, software development contact, app development quote, project inquiry"
+    />
 
     <!-- Bootstrap CSS -->
     <link
@@ -441,7 +449,7 @@
                     <div>
                       <h5 class="fw-bold mb-0">Our Office</h5>
                       <p class="text-body-secondary mb-0">
-                        123 Tech Park, Indore, MP, India
+                        550 ORTEGA AVE, MOUNTAIN VIEW, CA 94040 USA
                       </p>
                     </div>
                   </div>
@@ -450,9 +458,9 @@
                     <div>
                       <h5 class="fw-bold mb-0">Email Us</h5>
                       <a
-                        href="mailto:hello@Appify Tecno.com"
+                        href="mailto:info@appifytecno.it.com"
                         class="text-body-secondary text-decoration-none"
-                        >hello@Appify Tecno.com</a
+                        >info@appifytecno.it.com</a
                       >
                     </div>
                   </div>
@@ -461,9 +469,9 @@
                     <div>
                       <h5 class="fw-bold mb-0">Call Us</h5>
                       <a
-                        href="tel:+911234567890"
+                        href="tel:+18889005983"
                         class="text-body-secondary text-decoration-none"
-                        >+91 123-456-7890</a
+                        >1-888-900-5983</a
                       >
                     </div>
                   </div>
@@ -835,9 +843,9 @@
 
         // --- LEAFLET MAP INITIALIZATION ---
         function initMap() {
-          // Coordinates for Indore, Madhya Pradesh, India
-          const lat = 22.7196;
-          const lng = 75.8577;
+          // Coordinates for Mountain View, California, USA
+          const lat = 37.399043;
+          const lng = -122.105735;
 
           const map = L.map("map").setView([lat, lng], 14);
 
@@ -855,7 +863,9 @@
 
           L.marker([lat, lng], { icon: customIcon })
             .addTo(map)
-            .bindPopup("<b>Appify Tecno</b><br>123 Tech Park, Indore, MP.")
+            .bindPopup(
+              "<b>Appify Tecno</b><br>550 ORTEGA AVE, MOUNTAIN VIEW, CA 94040 USA"
+            )
             .openPopup();
         }
 
